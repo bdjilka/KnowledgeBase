@@ -4,7 +4,7 @@ from django.conf.urls import include
 from django.urls import path
 from rest_framework import routers
 
-from pentest_brain.views import PentesterViewSet, SphereViewSet, TagViewSet, CommandViewSet
+from pentest_brain.views import PentesterViewSet, SphereViewSet, TagViewSet, CommandViewSet, CommandDocumentView
 
 
 router = routers.DefaultRouter()
@@ -13,6 +13,7 @@ router.register(r'users', PentesterViewSet, basename='User')
 router.register(r'spheres', SphereViewSet, basename='Sphere')
 router.register(r'tags', TagViewSet, basename='Tag')
 router.register(r'commands', CommandViewSet, basename='Command')
+router.register(r'search', CommandDocumentView, basename='Search')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

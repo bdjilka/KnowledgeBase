@@ -3,7 +3,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-SECRET_KEY = '309r$3a)35(vzmsuk0=vz2sz0rp8=l1lqha_o7r9h+_cqo&--m'
+SECRET_KEY = os.getenv('SECRET_KEY', 'hehe')
 
 DEBUG = True
 
@@ -19,9 +19,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'django_elasticsearch_dsl',
+    'django_elasticsearch_dsl_drf',
 
     'pentest_brain',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -33,21 +36,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-    ),
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10,
-}
 
 AUTH_USER_MODEL = 'pentest_brain.Pentester'
 
 ROOT_URLCONF = 'config.urls'
+
 
 TEMPLATES = [
     {
@@ -71,8 +64,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': os.getenv('postgres', 'localhost'),
+        'PORT': '5432',
     }
 }
 
@@ -91,6 +88,33 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10,
+    'ORDERING_PARAM': 'ordering',
+}
+
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': os.getenv('elasticsearch', 'localhost:9200')
+    },
+}
+
+# Name of the Elasticsearch index
+ELASTICSEARCH_INDEX_NAMES = {
+    'pentest_brain.documents.tag': 'tag',
+    'pentest_brain.documents.command': 'command',
+}
 
 
 LANGUAGE_CODE = 'en-us'
