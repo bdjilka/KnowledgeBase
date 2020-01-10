@@ -1,0 +1,8 @@
+Django==2.2.4
+asgiref==3.2.3
+pytz==2019.3
+djangorestframework==3.11.0
+django-elasticsearch-dsl==6.4.2
+django-elasticsearch-dsl-drf==0.20.5
+elasticsearch-dsl==6.4.0
+psycopg2-binary==2.8.4

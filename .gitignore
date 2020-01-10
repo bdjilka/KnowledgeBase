@@ -1,2 +1,5 @@
 # Project exclude paths
 /venv/
+/.idea/
+pentest_front/node_modules/
+.env

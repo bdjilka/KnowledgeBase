@@ -1,0 +1,33 @@
+version: '3'
+services:
+
+  elasticsearch:
+    image: elasticsearch:6.4.0
+    volumes:
+      - data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+
+  django:
+    container_name: pentest_brain_project
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: python manage.py runserver 192.168.190.128:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code
+    depends_on:
+      - postgres
+      - elasticsearch
+
+volumes:
+  data:
