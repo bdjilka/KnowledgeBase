@@ -1,4 +1,4 @@
-Django==2.2.4
+Django==2.2.8
 asgiref==3.2.3
 pytz==2019.3
 djangorestframework==3.11.0
