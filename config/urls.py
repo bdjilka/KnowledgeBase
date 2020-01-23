@@ -5,7 +5,8 @@ from django.urls import path
 from rest_framework import routers
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 
-from pentest_brain.views import PentesterViewSet, SphereViewSet, TagViewSet, CommandViewSet, CommandDocumentView
+from pentest_brain.views import PentesterViewSet, SphereViewSet, TagViewSet, CommandViewSet
+from pentest_brain.elastic_views import CommandDocumentView
 
 
 import config.jwt_refresh
